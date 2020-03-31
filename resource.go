@@ -101,7 +101,7 @@ func combine(base *url.URL, resPath string) (*url.URL, error) {
 	if resPath == "" {
 		return base, nil
 	}
-	u, err := base.Parse(path.Join(base.RawPath, resPath))
+	u, err := base.Parse(path.Join(base.EscapedPath(), resPath))
 	return u, err
 }
 
