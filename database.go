@@ -90,6 +90,7 @@ func newDatabase(res *Resource) (*Database, error) {
 type IDatabase interface {
 	Save(doc map[string]interface{}, options url.Values) (string, string, error)
 	Get(docid string, options url.Values) (map[string]interface{}, error)
+	View(name string, wrapper func(Row) Row, options map[string]interface{}) (*ViewResults, error)
 }
 
 // Available returns error if the database is not good to go.
