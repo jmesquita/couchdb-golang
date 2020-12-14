@@ -87,6 +87,11 @@ func newDatabase(res *Resource) (*Database, error) {
 	}, nil
 }
 
+type IDatabase interface {
+	Save(doc map[string]interface{}, options url.Values) (string, string, error)
+	Get(docid string, options url.Values) (map[string]interface{}, error)
+}
+
 // Available returns error if the database is not good to go.
 func (d *Database) Available() error {
 	_, _, err := d.resource.Head("", nil, nil)

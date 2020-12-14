@@ -43,6 +43,10 @@ type DatabaseInfo struct {
 	InstanceStartTime string `json:"instance_start_time"`
 }
 
+type IServer interface {
+	Get(name string) (*Database, error)
+}
+
 // NewServer creates a CouchDB server instance in address urlStr.
 func NewServer(urlStr string) (*Server, error) {
 	return newServer(urlStr, true)
