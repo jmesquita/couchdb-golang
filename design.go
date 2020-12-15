@@ -250,7 +250,7 @@ func NewViewDefinition(design, name, mapFun, reduceFun, language string, wrapper
 }
 
 // View executes the view definition in the given database.
-func (vd *ViewDefinition) View(db *Database, options map[string]interface{}) (*ViewResults, error) {
+func (vd *ViewDefinition) View(db *Database, options map[string]interface{}) (IViewResults, error) {
 	opts := deepCopy(options)
 	for k, v := range vd.options {
 		opts[k] = v

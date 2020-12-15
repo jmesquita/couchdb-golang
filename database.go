@@ -1431,7 +1431,7 @@ func (d *Database) IterView(name string, batch int, wrapper func(Row) Row, optio
 			}
 			// get rows in batch with one extra for start of next batch
 			options["limit"] = loopLimit + 1
-			var results *ViewResults
+			var results IViewResults
 			results, err = d.View(name, wrapper, options)
 			if err != nil {
 				break
