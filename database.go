@@ -1388,7 +1388,7 @@ func designPath(designDoc, designType string) string {
 // wrapper: an optional function for processing the result rows after retrieved.
 //
 // options: optional query parameters.
-func (d *Database) View(name string, wrapper func(Row) Row, options map[string]interface{}) (*ViewResults, error) {
+func (d *Database) View(name string, wrapper func(Row) Row, options map[string]interface{}) (IViewResults, error) {
 	designDocPath := designPath(name, "_view")
 	return newViewResults(d.resource, designDocPath, options, wrapper), nil
 }
