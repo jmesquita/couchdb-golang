@@ -44,6 +44,10 @@ type ViewResults struct {
 	err       error
 }
 
+type IViewResults interface {
+	Rows() ([]Row, error)
+}
+
 // newViewResults returns a newly-allocated *ViewResults
 func newViewResults(r *Resource, ddoc string, opt map[string]interface{}, wr func(Row) Row) *ViewResults {
 	return &ViewResults{
