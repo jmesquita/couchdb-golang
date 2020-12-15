@@ -90,6 +90,7 @@ func newDatabase(res *Resource) (*Database, error) {
 type IDatabase interface {
 	Save(doc map[string]interface{}, options url.Values) (string, string, error)
 	Get(docid string, options url.Values) (map[string]interface{}, error)
+	View(name string, wrapper func(Row) Row, options map[string]interface{}) (IViewResults, error)
 }
 
 // Available returns error if the database is not good to go.
@@ -1387,7 +1388,7 @@ func designPath(designDoc, designType string) string {
 // wrapper: an optional function for processing the result rows after retrieved.
 //
 // options: optional query parameters.
-func (d *Database) View(name string, wrapper func(Row) Row, options map[string]interface{}) (*ViewResults, error) {
+func (d *Database) View(name string, wrapper func(Row) Row, options map[string]interface{}) (IViewResults, error) {
 	designDocPath := designPath(name, "_view")
 	return newViewResults(d.resource, designDocPath, options, wrapper), nil
 }
@@ -1430,7 +1431,7 @@ func (d *Database) IterView(name string, batch int, wrapper func(Row) Row, optio
 			}
 			// get rows in batch with one extra for start of next batch
 			options["limit"] = loopLimit + 1
-			var results *ViewResults
+			var results IViewResults
 			results, err = d.View(name, wrapper, options)
 			if err != nil {
 				break

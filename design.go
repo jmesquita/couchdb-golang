@@ -44,6 +44,10 @@ type ViewResults struct {
 	err       error
 }
 
+type IViewResults interface {
+	Rows() ([]Row, error)
+}
+
 // newViewResults returns a newly-allocated *ViewResults
 func newViewResults(r *Resource, ddoc string, opt map[string]interface{}, wr func(Row) Row) *ViewResults {
 	return &ViewResults{
@@ -246,7 +250,7 @@ func NewViewDefinition(design, name, mapFun, reduceFun, language string, wrapper
 }
 
 // View executes the view definition in the given database.
-func (vd *ViewDefinition) View(db *Database, options map[string]interface{}) (*ViewResults, error) {
+func (vd *ViewDefinition) View(db *Database, options map[string]interface{}) (IViewResults, error) {
 	opts := deepCopy(options)
 	for k, v := range vd.options {
 		opts[k] = v
